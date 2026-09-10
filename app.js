@@ -1,5 +1,4 @@
-const SLIDE_DURATION = 7000;
-const ANSWER_REVEAL_TIME = 3000;
+const SLIDE_DURATION = 10000;
 
 const slides = [
   {
@@ -91,12 +90,9 @@ const fullscreenButton = document.querySelector("#fullscreenButton");
 
 let currentIndex = 0;
 let isPlaying = true;
-let isAnswerVisible = false;
-let selectedAnswer = null;
 let elapsedBeforeStart = 0;
 let startedAt = performance.now();
 let advanceTimer = null;
-let revealTimer = null;
 let animationFrame = null;
 let pausedByVisibility = false;
 
@@ -107,7 +103,6 @@ function getElapsed() {
 
 function clearClock() {
   window.clearTimeout(advanceTimer);
-  window.clearTimeout(revealTimer);
   window.cancelAnimationFrame(animationFrame);
 }
 
@@ -134,15 +129,6 @@ function scheduleClock({ reset = false } = {}) {
 
   const elapsed = elapsedBeforeStart;
   advanceTimer = window.setTimeout(() => goTo(currentIndex + 1), Math.max(0, SLIDE_DURATION - elapsed));
-
-  if (slides[currentIndex].type === "myth" && !isAnswerVisible) {
-    const revealIn = ANSWER_REVEAL_TIME - elapsed;
-    if (revealIn <= 0) {
-      revealAnswer("auto");
-    } else {
-      revealTimer = window.setTimeout(() => revealAnswer("auto"), revealIn);
-    }
-  }
 }
 
 function introTemplate(slide) {
@@ -152,7 +138,7 @@ function introTemplate(slide) {
         <p class="eyebrow">${slide.eyebrow}</p>
         <h1 class="display-title">${slide.title}</h1>
         <p class="intro-copy">${slide.description}</p>
-        <p class="intro-note"><span aria-hidden="true">7</span> Una nueva pantalla cada 7 segundos</p>
+        <p class="intro-note"><span aria-hidden="true">10</span> Una nueva pantalla cada 10 segundos</p>
       </div>
       <figure class="visual-panel" style="--panel-image: url('${slide.image}')">
         <img src="${slide.image}" alt="${slide.imageAlt}" />
@@ -164,25 +150,14 @@ function introTemplate(slide) {
 
 function mythTemplate(slide) {
   const isLong = slide.statement.length > 78;
-  const responseMessage =
-    selectedAnswer === "realidad"
-      ? "La respuesta correcta es: mito. "
-      : selectedAnswer === "mito"
-        ? "Correcto: es un mito. "
-        : "Es un mito. ";
 
   return `
     <article class="slide slide--myth" style="--slide-accent: ${slide.accent}">
       <div class="slide__copy">
         <p class="eyebrow">Mito ${slide.number} · ¿Mito o realidad?</p>
         <h2 class="statement ${isLong ? "statement--long" : ""}">${slide.statement}</h2>
-        <p class="choice-prompt">Elige una respuesta o espera para descubrirla:</p>
-        <div class="choices" aria-label="Elige mito o realidad">
-          <button class="choice-button ${selectedAnswer === "mito" ? "is-selected" : ""}" type="button" data-answer="mito" ${isAnswerVisible ? "disabled" : ""}>Mito</button>
-          <button class="choice-button ${selectedAnswer === "realidad" ? "is-selected" : ""}" type="button" data-answer="realidad" ${isAnswerVisible ? "disabled" : ""}>Realidad</button>
-        </div>
-        <div class="answer-card" ${isAnswerVisible ? "" : "hidden"}>
-          <span class="answer-card__verdict">${responseMessage}</span>
+        <div class="answer-card">
+          <span class="answer-card__verdict">Es un mito.</span>
           <p>${slide.reality}</p>
         </div>
       </div>
@@ -275,20 +250,8 @@ function renderSlide() {
 
 function goTo(index) {
   currentIndex = (index + slides.length) % slides.length;
-  isAnswerVisible = false;
-  selectedAnswer = null;
   renderSlide();
   scheduleClock({ reset: true });
-}
-
-function revealAnswer(answer) {
-  if (slides[currentIndex].type !== "myth" || isAnswerVisible) return;
-
-  elapsedBeforeStart = getElapsed();
-  selectedAnswer = answer === "auto" ? null : answer;
-  isAnswerVisible = true;
-  renderSlide();
-  scheduleClock();
 }
 
 function setPlaying(nextValue, { visibilityChange = false } = {}) {
@@ -310,12 +273,6 @@ function setPlaying(nextValue, { visibilityChange = false } = {}) {
 previousButton.addEventListener("click", () => goTo(currentIndex - 1));
 nextButton.addEventListener("click", () => goTo(currentIndex + 1));
 playButton.addEventListener("click", () => setPlaying(!isPlaying));
-
-slideHost.addEventListener("click", (event) => {
-  const answerButton = event.target.closest("[data-answer]");
-  if (!answerButton) return;
-  revealAnswer(answerButton.dataset.answer);
-});
 
 dots.addEventListener("click", (event) => {
   const dot = event.target.closest("[data-slide]");

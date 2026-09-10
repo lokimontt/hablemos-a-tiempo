@@ -6,9 +6,9 @@ Actividad web para tablet sobre mitos, realidades y acciones de prevención del 
 
 ## Características
 
-- Avance automático cada 7 segundos.
-- Cinco preguntas interactivas de “Mito o realidad”.
-- Respuesta automática después de 3 segundos o inmediata al tocar una opción.
+- Avance automático cada 10 segundos.
+- Cinco preguntas de “Mito o realidad”.
+- La respuesta de cada mito aparece inmediatamente junto con la pregunta.
 - Controles para pausar, retroceder y avanzar.
 - Diseño adaptable a tablet horizontal, vertical y teléfono.
 - Acceso visible a la Línea de Prevención del Suicidio `*4141`.
