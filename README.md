@@ -2,6 +2,8 @@
 
 Actividad web para tablet sobre mitos, realidades y acciones de prevención del suicidio en Chile.
 
+**Abrir la actividad:** [https://lokimontt.github.io/hablemos-a-tiempo/](https://lokimontt.github.io/hablemos-a-tiempo/)
+
 ## Características
 
 - Avance automático cada 7 segundos.
