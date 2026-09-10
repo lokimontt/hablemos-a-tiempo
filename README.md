@@ -1,0 +1,21 @@
+# Hablemos a tiempo
+
+Actividad web para tablet sobre mitos, realidades y acciones de prevención del suicidio en Chile.
+
+## Características
+
+- Avance automático cada 7 segundos.
+- Cinco preguntas interactivas de “Mito o realidad”.
+- Respuesta automática después de 3 segundos o inmediata al tocar una opción.
+- Controles para pausar, retroceder y avanzar.
+- Diseño adaptable a tablet horizontal, vertical y teléfono.
+- Acceso visible a la Línea de Prevención del Suicidio `*4141`.
+- Imágenes proporcionadas para la actividad.
+
+## Abrir localmente
+
+Es un sitio estático. Puedes abrir `index.html` directamente o servir la carpeta con cualquier servidor web local.
+
+## Fuente de ayuda
+
+La información de la línea `*4141` fue verificada en el sitio oficial del [Ministerio de Salud de Chile](https://www.minsal.cl/linea-de-atencion-4141-no-estas-solo-no-estas-sola/): atención gratuita, confidencial, las 24 horas y desde teléfonos celulares.
