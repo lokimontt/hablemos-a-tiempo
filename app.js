@@ -138,7 +138,9 @@ function introTemplate(slide) {
         <p class="eyebrow">${slide.eyebrow}</p>
         <h1 class="display-title">${slide.title}</h1>
         <p class="intro-copy">${slide.description}</p>
-        <p class="intro-note"><span aria-hidden="true">10</span> Una nueva pantalla cada 10 segundos</p>
+        <div class="intro-flourish" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
       </div>
       <figure class="visual-panel" style="--panel-image: url('${slide.image}')">
         <img src="${slide.image}" alt="${slide.imageAlt}" />
